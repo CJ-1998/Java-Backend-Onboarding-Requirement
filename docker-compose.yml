@@ -1,0 +1,29 @@
+services:
+  requirement:
+    build:
+      dockerfile: Dockerfile
+      args:
+        - FILE_DIRECTORY = ./onboarding_requirement
+    networks:
+      - requirement_network
+  user-data-db:
+    container_name: user_data_db
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: user_data_db
+      POSTGRES_PASSWORD: user_data_db
+      POSTGRES_DB: user_data
+    volumes:
+      - user_data_db:/var/lib/postgresql/data
+    networks:
+      - requirement_network
+
+volumes:
+  user_data_db:
+
+networks:
+  requirement_network:
+    driver: bridge
