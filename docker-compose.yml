@@ -4,6 +4,12 @@ services:
       dockerfile: Dockerfile
       args:
         - FILE_DIRECTORY = ./onboarding_requirement
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-data-db:5432/user_data
+      SPRING_DATASOURCE_USERNAME: user_data_db
+      SPRING_DATASOURCE_PASSWORD: user_data_db
     networks:
       - requirement_network
   user-data-db:
