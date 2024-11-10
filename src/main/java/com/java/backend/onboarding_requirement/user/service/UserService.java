@@ -31,7 +31,7 @@ public class UserService {
         user.setRoles(List.of(getUserAuthority(user)));
         userRepository.save(user);
 
-        return SignUpResponseDto.converUserToSignUpResponseDto(user);
+        return SignUpResponseDto.convertUserToSignUpResponseDto(user);
     }
 
     private UserAuthority getUserAuthority(User user) {

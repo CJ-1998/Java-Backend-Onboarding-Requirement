@@ -28,7 +28,7 @@ public class SignUpResponseDto {
         }
     }
 
-    public static SignUpResponseDto converUserToSignUpResponseDto(User user) {
+    public static SignUpResponseDto convertUserToSignUpResponseDto(User user) {
 
         List<UserAuth> authorities = new ArrayList<>();
         for (UserAuthority authority : user.getRoles()) {
