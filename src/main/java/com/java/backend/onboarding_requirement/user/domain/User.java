@@ -41,11 +41,11 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<UserAuthority> roles = new ArrayList<>();
 
-    public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto) {
+    public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto, String password) {
 
         return User.builder()
                 .username(signUpRequestDto.getUsername())
-                .password(signUpRequestDto.getPassword())
+                .password(password)
                 .nickname(signUpRequestDto.getNickname())
                 .build();
     }

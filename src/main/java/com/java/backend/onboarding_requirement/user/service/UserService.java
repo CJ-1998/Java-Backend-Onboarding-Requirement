@@ -25,9 +25,9 @@ public class UserService {
 
     @Transactional
     public SignUpResponseDto signUp(SignUpRequestDto signUpRequestDto) {
-        signUpRequestDto.setPassword(passwordEncoder.encode(signUpRequestDto.getPassword()));
+        String encodePassword = passwordEncoder.encode(signUpRequestDto.getPassword());
 
-        User user = User.convertSignUpRequestDtoToUser(signUpRequestDto);
+        User user = User.convertSignUpRequestDtoToUser(signUpRequestDto, encodePassword);
         user.setRoles(List.of(getUserAuthority(user)));
         userRepository.save(user);
 
