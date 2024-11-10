@@ -38,4 +38,26 @@ class JwtUtilTest {
 
         assertThat(refreshToken).isNotNull();
     }
+
+    @Test
+    void verificationAccessTokenTest() {
+        String username = "kim";
+        List<String> roles = List.of("ROLE_USER");
+
+        String accessToken = jwtUtil.createAccessToken(username, roles);
+        String realAccessToken = jwtUtil.substringToken(accessToken);
+
+        assertThat(jwtUtil.validateToken(realAccessToken)).isTrue();
+    }
+
+    @Test
+    void verificationRefreshTokenTest() {
+        String username = "kim";
+
+        String refreshToken = jwtUtil.createRefreshToken(username);
+
+        String realRefreshToken = jwtUtil.substringToken(refreshToken);
+
+        assertThat(jwtUtil.validateToken(realRefreshToken)).isTrue();
+    }
 }
