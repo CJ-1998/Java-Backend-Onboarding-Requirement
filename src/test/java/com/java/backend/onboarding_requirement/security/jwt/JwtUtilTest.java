@@ -29,4 +29,13 @@ class JwtUtilTest {
 
         assertThat(accessToken).isNotNull();
     }
+
+    @Test
+    void RefreshTokenTest() {
+        String username = "kim";
+
+        String refreshToken = jwtUtil.createRefreshToken(username);
+
+        assertThat(refreshToken).isNotNull();
+    }
 }
