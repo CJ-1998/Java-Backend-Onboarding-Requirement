@@ -10,6 +10,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -46,6 +47,7 @@ public class User {
                 .username(signUpRequestDto.getUsername())
                 .password(password)
                 .nickname(signUpRequestDto.getNickname())
+                .roles(new ArrayList<>())
                 .build();
     }
 }
