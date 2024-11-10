@@ -10,7 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -39,7 +38,7 @@ public class User {
 
     @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<UserAuthority> roles = new ArrayList<>();
+    private List<UserAuthority> roles;
 
     public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto, String password) {
 

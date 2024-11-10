@@ -17,12 +17,14 @@ import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 @Slf4j(topic = "JWT 관련 로그")
+@Setter
 @Component
 public class JwtUtil {
     // Header KEY 값
