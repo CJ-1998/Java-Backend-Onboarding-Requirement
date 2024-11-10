@@ -43,26 +43,38 @@ public class LoginTest {
 
     private SignRequestDto signRequestDto;
 
+    private static final String TEST_USERNAME = "JIN HO";
+    private static final String TEST_PASSWORD = "12341234";
+    private static final String TEST_NICKNAME = "Mentos";
+
     @BeforeEach
     public void setup() {
+        createSignRequestDto();
+        User user = getUser();
+
+        // 사용자 정보가 필요할 때 반환될 Mock 데이터 설정
+        UserDetailsImpl mockUser = new UserDetailsImpl(user);
+        Mockito.when(userDetailsService.loadUserByUsername(TEST_USERNAME)).thenReturn(mockUser);
+    }
+
+    private void createSignRequestDto() {
         signRequestDto = new SignRequestDto();
-        signRequestDto.setUsername("JIN HO");
-        signRequestDto.setPassword("12341234");
+        signRequestDto.setUsername(TEST_USERNAME);
+        signRequestDto.setPassword(TEST_PASSWORD);
+    }
 
+    private User getUser() {
         SignUpRequestDto signUpRequestDto = new SignUpRequestDto();
-        signUpRequestDto.setUsername("JIN HO");
-        signUpRequestDto.setPassword("12341234");
-        signUpRequestDto.setNickname("Mentos");
+        signUpRequestDto.setUsername(TEST_USERNAME);
+        signUpRequestDto.setPassword(TEST_PASSWORD);
+        signUpRequestDto.setNickname(TEST_NICKNAME);
 
-        String password = passwordEncoder.encode("12341234");
+        String password = passwordEncoder.encode(TEST_PASSWORD);
 
         User user = User.convertSignUpRequestDtoToUser(signUpRequestDto, password);
         UserAuthority userAuthority = new UserAuthority(UserRole.USER, user);
         user.setRoles(List.of(userAuthority));
-
-        // 사용자 정보가 필요할 때 반환될 Mock 데이터 설정
-        UserDetailsImpl mockUser = new UserDetailsImpl(user);
-        Mockito.when(userDetailsService.loadUserByUsername("JIN HO")).thenReturn(mockUser);
+        return user;
     }
 
     @Test
