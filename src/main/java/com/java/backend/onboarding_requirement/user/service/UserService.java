@@ -24,6 +24,6 @@ public class UserService {
 
         userRepository.save(user);
 
-
+        return SignUpResponseDto.converUserToSignUpResponseDto(user);
     }
 }
