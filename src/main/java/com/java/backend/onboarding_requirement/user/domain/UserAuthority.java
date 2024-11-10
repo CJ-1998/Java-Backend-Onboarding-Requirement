@@ -26,7 +26,8 @@ public class UserAuthority {
     @JoinColumn(name = "user_id") // user_id가 외래 키로 사용됩니다
     private User user;
 
-    public UserAuthority(UserRole role) {
+    public UserAuthority(UserRole role, User user) {
         this.role = role;
+        this.user = user;
     }
 }

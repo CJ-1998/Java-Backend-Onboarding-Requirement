@@ -11,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -55,11 +56,16 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
         List<UserAuthority> roles = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRoles();
 
-        String accessToken = jwtUtil.createAccessToken(username, roles);
+        List<String> userRoles = new ArrayList<>();
+        for (UserAuthority role : roles) {
+            userRoles.add(role.getRole().getAuthority());
+        }
+
+        String accessToken = jwtUtil.createAccessToken(username, userRoles);
         jwtUtil.addJwtToHeader(accessToken, response);
 
         // 사용자 정보를 JSON으로 변환하여 response에 추가
-        SignResponseDto signResponseDto = new SignResponseDto(accessToken);
+        SignResponseDto signResponseDto = new SignResponseDto(jwtUtil.substringToken(accessToken));
         String userJsonResponse = new ObjectMapper().writeValueAsString(signResponseDto);
 
         response.setContentType("application/json");

@@ -17,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -36,18 +37,16 @@ public class User {
     private String password;
     private String nickname;
 
+    @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<UserAuthority> roles = new ArrayList<>();
 
     public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto) {
-        UserAuthority userAuthority = new UserAuthority(UserRole.USER);
 
         return User.builder()
                 .username(signUpRequestDto.getUsername())
                 .password(signUpRequestDto.getPassword())
                 .nickname(signUpRequestDto.getNickname())
-                .roles(List.of(userAuthority))
                 .build();
     }
-
 }
