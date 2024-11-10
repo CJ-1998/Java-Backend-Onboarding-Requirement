@@ -39,7 +39,7 @@ public class User {
 
     @Setter
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<UserAuthority> roles = new ArrayList<>();
+    private List<UserAuthority> roles;
 
     public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto, String password) {
 
@@ -47,6 +47,7 @@ public class User {
                 .username(signUpRequestDto.getUsername())
                 .password(password)
                 .nickname(signUpRequestDto.getNickname())
+                .roles(new ArrayList<>())
                 .build();
     }
 }
