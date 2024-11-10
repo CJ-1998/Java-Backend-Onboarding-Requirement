@@ -1,8 +1,10 @@
 package com.java.backend.onboarding_requirement.security.jwt;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import io.jsonwebtoken.security.Keys;
+import io.jsonwebtoken.security.SignatureException;
 import java.util.Base64;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -59,5 +61,29 @@ class JwtUtilTest {
         String realRefreshToken = jwtUtil.substringToken(refreshToken);
 
         assertThat(jwtUtil.validateToken(realRefreshToken)).isTrue();
+    }
+
+    @Test
+    void wrongAccessTokenTest() {
+        String username = "kim";
+        List<String> roles = List.of("ROLE_USER");
+
+        String accessToken = jwtUtil.createAccessToken(username, roles);
+        String wrongAccessToken = jwtUtil.substringToken(accessToken) + "123";
+
+        assertThatThrownBy(() -> jwtUtil.validateToken(wrongAccessToken))
+                .isInstanceOf(SignatureException.class);
+    }
+
+    @Test
+    void wrongRefreshTokenTest() {
+        String username = "kim";
+
+        String refreshToken = jwtUtil.createRefreshToken(username);
+
+        String wrongRefreshToken = jwtUtil.substringToken(refreshToken) + "123";
+
+        assertThatThrownBy(() -> jwtUtil.validateToken(wrongRefreshToken))
+                .isInstanceOf(SignatureException.class);
     }
 }
