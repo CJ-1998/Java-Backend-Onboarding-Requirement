@@ -1,7 +1,7 @@
 package com.java.backend.onboarding_requirement.security.userdetails;
 
 import com.java.backend.onboarding_requirement.user.domain.User;
-import com.java.backend.onboarding_requirement.user.domain.UserRole;
+import com.java.backend.onboarding_requirement.user.domain.UserAuthority;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -33,12 +33,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        List<UserRole> roles = user.getRoles();
+        List<UserAuthority> roles = user.getRoles();
 
         Collection<GrantedAuthority> authorities = new ArrayList<>();
 
-        for (UserRole role : roles) {
-            String authority = role.getAuthority();
+        for (UserAuthority role : roles) {
+            String authority = role.getRole().getAuthority();
             SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
             authorities.add(simpleGrantedAuthority);
         }

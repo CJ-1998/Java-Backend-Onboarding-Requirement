@@ -1,6 +1,6 @@
 package com.java.backend.onboarding_requirement.security.jwt;
 
-import com.java.backend.onboarding_requirement.user.domain.UserRole;
+import com.java.backend.onboarding_requirement.user.domain.UserAuthority;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -51,7 +51,7 @@ public class JwtUtil {
     }
 
     // Access Token 생성
-    public String createAccessToken(String username, List<UserRole> roles) {
+    public String createAccessToken(String username, List<UserAuthority> roles) {
         Date date = new Date();
 
         return BEARER_PREFIX +

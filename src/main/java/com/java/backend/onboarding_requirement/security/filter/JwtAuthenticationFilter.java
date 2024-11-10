@@ -5,7 +5,7 @@ import com.java.backend.onboarding_requirement.security.dto.SignRequestDto;
 import com.java.backend.onboarding_requirement.security.dto.SignResponseDto;
 import com.java.backend.onboarding_requirement.security.jwt.JwtUtil;
 import com.java.backend.onboarding_requirement.security.userdetails.UserDetailsImpl;
-import com.java.backend.onboarding_requirement.user.domain.UserRole;
+import com.java.backend.onboarding_requirement.user.domain.UserAuthority;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,7 +53,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) throws IOException, ServletException {
         log.info("로그인 성공 및 JWT 생성");
         String username = ((UserDetailsImpl) authResult.getPrincipal()).getUsername();
-        List<UserRole> roles = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRoles();
+        List<UserAuthority> roles = ((UserDetailsImpl) authResult.getPrincipal()).getUser().getRoles();
 
         String accessToken = jwtUtil.createAccessToken(username, roles);
         jwtUtil.addJwtToHeader(accessToken, response);

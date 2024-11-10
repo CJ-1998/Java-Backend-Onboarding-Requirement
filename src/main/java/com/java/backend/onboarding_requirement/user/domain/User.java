@@ -1,12 +1,14 @@
 package com.java.backend.onboarding_requirement.user.domain;
 
 import com.java.backend.onboarding_requirement.user.dto.SignUpRequestDto;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,18 +36,17 @@ public class User {
     private String password;
     private String nickname;
 
-    @ElementCollection
-    private List<UserRole> roles;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<UserAuthority> roles = new ArrayList<>();
 
     public static User convertSignUpRequestDtoToUser(SignUpRequestDto signUpRequestDto) {
-        List<UserRole> roles = new ArrayList<>();
-        roles.add(UserRole.USER);
+        UserAuthority userAuthority = new UserAuthority(UserRole.USER);
 
         return User.builder()
                 .username(signUpRequestDto.getUsername())
                 .password(signUpRequestDto.getPassword())
                 .nickname(signUpRequestDto.getNickname())
-                .roles(roles)
+                .roles(List.of(userAuthority))
                 .build();
     }
 
